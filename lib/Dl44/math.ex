@@ -2,7 +2,9 @@ defmodule Dl44.Math do
   alias Dl44.Vector
   alias Dl44.Point
 
-  defguard p_or_v(type1, type2) when type1 in [Vector, Point] and type2 in [Vector, Point]
+  defguard p_or_v(type) when type in [Vector, Point]
+  defguard p_or_v(type1, type2) when p_or_v(type1) and p_or_v(type2)
+  defguard is_numeric(val) when is_integer(val) or is_float(val)
 
   def add(%type1{x: x1, y: y1, z: z1}, %type2{x: x2, y: y2, z: z2}) when p_or_v(type1, type2) do
     new_type =
@@ -31,6 +33,15 @@ defmodule Dl44.Math do
       x: x1 - x2,
       y: y1 - y2,
       z: z1 - z2
+    )
+  end
+
+  def scale(%tup{x: x, y: y, z: z}, scalar \\ 1.0) when p_or_v(tup) and is_numeric(scalar) do
+    struct!(
+      tup,
+      x: x * scalar,
+      y: y * scalar,
+      z: z * scalar
     )
   end
 end

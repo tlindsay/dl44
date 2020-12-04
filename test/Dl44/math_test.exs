@@ -49,4 +49,16 @@ defmodule Dl44.MathTest do
       assert Math.sub(v1, v2) == Vector.new(%{x: -2.0, y: -4.0, z: -6.0})
     end
   end
+
+  describe "Math.scale" do
+    test "scales a vector up" do
+      v = Vector.new(1, 2, 3)
+      assert Math.scale(v, 2) == Vector.new(2, 4, 6)
+    end
+
+    test "scales a vector down" do
+      v = Vector.new(2, 4, 6)
+      assert Math.scale(v, 0.5) == Vector.new(1, 2, 3)
+    end
+  end
 end
