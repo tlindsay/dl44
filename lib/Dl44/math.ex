@@ -44,4 +44,19 @@ defmodule Dl44.Math do
       z: z * scalar
     )
   end
+
+  def dot(%Vector{w: w1, x: x1, y: y1, z: z1}, %Vector{w: w2, x: x2, y: y2, z: z2}) do
+    (x1 * x2) +
+    (y1 * y2) +
+    (z1 * z2) +
+    (w1 * w2)
+  end
+
+  def cross(%Vector{x: x1, y: y1, z: z1}, %Vector{x: x2, y: y2, z: z2}) do
+    Vector.new(
+      (y1 * z2) - (z1 * y2),
+      (z1 * x2) - (x1 * z2),
+      (x1 * y2) - (y1 * x2)
+    )
+  end
 end

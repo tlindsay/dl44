@@ -61,4 +61,23 @@ defmodule Dl44.MathTest do
       assert Math.scale(v, 0.5) == Vector.new(1, 2, 3)
     end
   end
+
+  describe "Math.dot" do
+    test "calculates the dot product of two vectors" do
+      v1 = Vector.new(1, 2, 3)
+      v2 = Vector.new(2, 3, 4)
+
+      assert Math.dot(v1, v2) == 20.0
+    end
+  end
+
+  describe "Math.cross" do
+    test "calculates the cross product of two vectors" do
+      v1 = Vector.new(1, 2, 3)
+      v2 = Vector.new(2, 3, 4)
+
+      assert Math.cross(v1, v2) == Vector.new(-1, 2, -1)
+      assert Math.cross(v2, v1) == Vector.new(1, -2, 1)
+    end
+  end
 end
