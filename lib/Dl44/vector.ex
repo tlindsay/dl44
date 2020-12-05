@@ -9,6 +9,14 @@ defmodule Dl44.Vector do
         }
 
   def new(%{x: x, y: y, z: z}), do: %Vector{x: x/1, y: y/1, z: z/1}
+  def new([x, y, z]), do: %Vector{x: x/1, y: y/1, z: z/1}
   def new(n \\ 0.0), do: %Vector{x: n/1, y: n/1, z: n/1}
   def new(x, y, z), do: %Vector{x: x/1, y: y/1, z: z/1}
+
+  def magnitude(%Vector{x: x, y: y, z: z}) do
+    [x, y, z]
+    |> Enum.map(fn n -> n * n end)
+    |> Enum.reduce(0, &+/2)
+    |> :math.sqrt
+  end
 end
