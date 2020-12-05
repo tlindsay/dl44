@@ -34,5 +34,12 @@ defmodule Dl44.VectorTest do
       assert result == :math.sqrt(14)
     end
   end
+
+  describe "Vector.normalize" do
+    test "calculates normal vector" do
+      v = Vector.new(4, 0, 0)
+      assert Vector.normalize(v) == Vector.new(1, 0, 0)
+    end
+  end
 end
 

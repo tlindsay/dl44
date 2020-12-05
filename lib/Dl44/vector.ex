@@ -19,4 +19,14 @@ defmodule Dl44.Vector do
     |> Enum.reduce(0, &+/2)
     |> :math.sqrt
   end
+
+  def normalize(%Vector{x: x, y: y, z: z}) do
+    mag = magnitude(%Vector{x: x, y: y, z: z})
+
+    new(
+      x/mag,
+      y/mag,
+      z/mag
+    )
+  end
 end
