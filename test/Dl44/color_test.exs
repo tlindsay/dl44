@@ -41,6 +41,13 @@ defmodule Dl44.ColorTest do
       assert Color.sub(c1, c2) == %Color{r: 0.8, g: 0.8, b: 0.8}
     end
 
+    test "Color.product" do
+      c1 = Color.new(1, 0.2, 0.4)
+      c2 = Color.new(0.9, 1, 0.1)
+
+      assert Color.product(c1, c2) == %Color{r: 0.9, g: 0.2, b: 0.04}
+    end
+
     test "Color.scale" do
       c = Color.new(0.5)
 

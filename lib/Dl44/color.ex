@@ -17,25 +17,41 @@ defmodule Dl44.Color do
 
   def add(%Color{r: r1, g: g1, b: b1}, %Color{r: r2, g: g2, b: b2}) do
     Color.new(
-      r1 + r2,
-      g1 + g2,
-      b1 + b2
+      [
+        r1 + r2,
+        g1 + g2,
+        b1 + b2
+      ] |> Enum.map(&(Float.round(&1, 15)))
     )
   end
 
   def sub(%Color{r: r1, g: g1, b: b1}, %Color{r: r2, g: g2, b: b2}) do
     Color.new(
-      r1 - r2,
-      g1 - g2,
-      b1 - b2
+      [
+        r1 - r2,
+        g1 - g2,
+        b1 - b2
+      ] |> Enum.map(&(Float.round(&1, 15)))
+    )
+  end
+
+  def product(%Color{r: r1, g: g1, b: b1}, %Color{r: r2, g: g2, b: b2}) do
+    Color.new(
+      [
+        r1 * r2,
+        g1 * g2,
+        b1 * b2
+      ] |> Enum.map(&(Float.round(&1, 15)))
     )
   end
 
   def scale(%Color{r: r, g: g, b: b}, n) when is_numeric(n) do
     Color.new(
-      r * n,
-      g * n,
-      b * n
+      [
+        r * n,
+        g * n,
+        b * n
+      ] |> Enum.map(&(Float.round(&1, 15)))
     )
   end
 end
