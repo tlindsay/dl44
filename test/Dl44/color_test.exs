@@ -55,5 +55,3 @@ defmodule Dl44.ColorTest do
     end
   end
 end
-
-
