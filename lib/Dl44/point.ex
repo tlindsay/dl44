@@ -8,8 +8,9 @@ defmodule Dl44.Point do
           z: float
         }
 
+  def new(n \\ 0.0)
   def new(%{x: x, y: y, z: z}), do: %Point{x: x/1, y: y/1, z: z/1}
   def new([x, y, z]), do: %Point{x: x/1, y: y/1, z: z/1}
-  def new(n \\ 0.0), do: %Point{x: n/1, y: n/1, z: n/1}
+  def new(n), do: %Point{x: n/1, y: n/1, z: n/1}
   def new(x, y, z), do: %Point{x: x/1, y: y/1, z: z/1}
 end
