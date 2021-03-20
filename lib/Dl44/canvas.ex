@@ -1,23 +1,25 @@
 defmodule Dl44.Canvas do
   alias Dl44.Canvas
   alias Dl44.Color
+  alias Matrix, as: ExternalMatrix
 
-  defstruct width: 0, height: 0, pixels: Matrix
+  defstruct width: 0, height: 0, pixels: ExternalMatrix
 
   def new(width \\ 0, height \\ 0, color \\ Color.new) do
-    pixels = Matrix.new(height, width, color)
+    pixels = ExternalMatrix.new(height, width, color)
     %Canvas{width: width, height: height, pixels: pixels}
   end
 
   def pixel_at(%Canvas{pixels: p}, x, y) when is_integer(x) and is_integer(y) do
-    Matrix.elem(p, x, y)
+    ExternalMatrix.elem(p, x, y)
   end
 
   def write_pixel(%Canvas{width: w, height: h, pixels: p}, x, y, %Color{} = color) when is_integer(x) and is_integer(y) do
     %Canvas{
       width: w,
       height: h,
-      pixels: Matrix.set(p, y, x, color)
+      pixels: ExternalMatrix
+.set(p, y, x, color)
     }
   end
 
