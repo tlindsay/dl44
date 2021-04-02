@@ -23,28 +23,30 @@ defmodule Dl44.Matrix.TransformTest do
       transform = {2, 3, 4}
       p = Point.new(-4, 6, 8)
 
-      assert Transform.transform(:scale, transform, p) == Point.new(-8, 18, 32) |> Point.to_mat
+      assert Transform.scale(p, transform) == Point.new(-8, 18, 32) |> Point.to_mat
     end
 
     test "A scaling matrix applied to a vector" do
       transform = {2, 3, 4}
       v = Vector.new(-4, 6, 8)
 
-      assert Transform.transform(:scale, transform, v) == Vector.new(-8, 18, 32) |> Vector.to_mat
+      assert Transform.scale(v, transform) == Vector.new(-8, 18, 32) |> Vector.to_mat
     end
 
     test "Multiplying by the inverse of a scaling matrix" do
       transform = {2, 3, 4}
+                  |> Transform.scalingMatrix
+                  |> Matrix.inverse
       v = Vector.new(-4, 6, 8)
 
-      assert Transform.transform(:scale_inverse, transform, v) == Vector.new(-2, 2, 2) |> Vector.to_mat
+      assert Transform.scale(v, transform) == Vector.new(-2, 2, 2) |> Vector.to_mat
     end
 
     test "Reflection is scaling by a negative value" do
       transform = {-1, 1, 1}
       p = Point.new(2, 3, 4)
 
-      assert Transform.transform(:scale, transform, p) == Point.new(-2, 3, 4) |> Point.to_mat
+      assert Transform.scale(p, transform) == Point.new(-2, 3, 4) |> Point.to_mat
     end
   end
 
@@ -53,21 +55,23 @@ defmodule Dl44.Matrix.TransformTest do
       transform = {5, -3, 2}
       p = Point.new(-3, 4, 5)
 
-      assert Transform.transform(:translate, transform, p) == Point.new(2, 1, 7) |> Point.to_mat
+      assert Transform.translate(p, transform) == Point.new(2, 1, 7) |> Point.to_mat
     end
 
     test "Multiplying by the inverse of a translation matrix" do
       transform = {5, -3, 2}
+                  |> Transform.translationMatrix
+                  |> Matrix.inverse
       p = Point.new(-3, 4, 5)
 
-      assert Transform.transform(:translate_inverse, transform, p) == Point.new(-8, 7, 3) |> Point.to_mat
+      assert Transform.translate(p, transform) == Point.new(-8, 7, 3) |> Point.to_mat
     end
 
     test "Translation does not affect vectors" do
       transform = {5, -3, 2}
       v = Vector.new(-3, 4, 5)
 
-      assert Transform.transform(:translate, transform, v) == v
+      assert Transform.translate(v, transform) == Vector.to_mat(v)
     end
   end
 end

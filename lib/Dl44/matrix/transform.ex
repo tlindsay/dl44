@@ -3,40 +3,30 @@ defmodule Dl44.Matrix.Transform do
   alias Dl44.Point
   alias Dl44.Vector
 
-  def transform(:translate, _, v = %Vector{}), do: v
-  def transform(type, t, p = %Point{}), do: transform(type, t, Point.to_mat(p))
-  def transform(type, t, v = %Vector{}), do: transform(type, t, Vector.to_mat(v))
-  def transform(:scale, t = {_x, _y, _z}, mat = %Matrex{}) do
-    t
-    |> scalingMatrix
-    |> Matrix.multiply(mat)
-  end
-  def transform(:scale_inverse, t = {_x, _y, _z}, mat = %Matrex{}) do
-    t
-    |> scalingMatrix
-    |> Matrix.inverse
-    |> Matrix.multiply(mat)
-  end
-  def transform(:translate, t = {_x, _y, _z}, mat = %Matrex{}) do
-    t
-    |> translationMatrix
-    |> Matrix.multiply(mat)
-  end
-  def transform(:translate_inverse, t = {_x, _y, _z}, mat = %Matrex{}) do
-    t
-    |> translationMatrix
-    |> Matrix.inverse
-    |> Matrix.multiply(mat)
-  end
-  def transform(unknown_translation, _, _) do
-    raise {:error, "Unknown translation: #{unknown_translation}"}
-  end
-
-  def rotate(p = %Point{}, angle, axis), do: Point.to_mat(p) |> rotate(angle, axis)
+  def rotate(p = %Point{}, angle, axis),  do: Point.to_mat(p) |> rotate(angle, axis)
   def rotate(v = %Vector{}, angle, axis), do: Vector.to_mat(v) |> rotate(angle, axis)
   def rotate(mat = %Matrex{}, angle, :x), do: rotation_x(angle) |> Matrix.multiply(mat)
   def rotate(mat = %Matrex{}, angle, :y), do: rotation_y(angle) |> Matrix.multiply(mat)
   def rotate(mat = %Matrex{}, angle, :z), do: rotation_z(angle) |> Matrix.multiply(mat)
+
+
+  def scale(p = %Point{}, t), do: Point.to_mat(p) |> scale(t)
+  def scale(v = %Vector{}, t), do: Vector.to_mat(v) |> scale(t)
+  def scale(m1 = %Matrex{}, m2 = %Matrex{}), do: Matrix.multiply(m2, m1)
+  def scale(mat = %Matrex{}, t = {_x, _y, _z}) do
+    t
+    |> scalingMatrix
+    |> Matrix.multiply(mat)
+  end
+
+  def translate(p = %Point{}, t),  do: Point.to_mat(p) |> translate(t)
+  def translate(v = %Vector{}, _), do: Vector.to_mat(v)
+  def translate(m1 = %Matrex{}, m2 = %Matrex{}), do: Matrix.multiply(m2, m1)
+  def translate(mat = %Matrex{}, t = {_x, _y, _z}) do
+    t
+    |> translationMatrix
+    |> Matrix.multiply(mat)
+  end
 
   @doc """
   A rotation X matrix takes the form:
