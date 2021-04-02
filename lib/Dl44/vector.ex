@@ -15,7 +15,7 @@ defmodule Dl44.Vector do
   def new(n), do: %Vector{x: n/1, y: n/1, z: n/1}
   def new(x, y, z), do: %Vector{x: x/1, y: y/1, z: z/1}
 
-  def to_mat(%Vector{x: x, y: y, z: z, w: w}), do: Matrix.new([[x, y, z, w]])
+  def to_mat(%Vector{x: x, y: y, z: z, w: w}), do: Matrix.new([[x, y, z, w]]) |> Matrix.transpose
 
   def magnitude(%Vector{x: x, y: y, z: z}) do
     [x, y, z]
