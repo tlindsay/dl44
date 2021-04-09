@@ -5,7 +5,7 @@ defmodule Dl44.Canvas do
 
   defstruct width: 0, height: 0, pixels: ExternalMatrix
 
-  def new(width \\ 0, height \\ 0, color \\ Color.new) do
+  def new(width \\ 0, height \\ 0, color \\ Color.new(1)) do
     pixels = ExternalMatrix.new(height, width, color)
     %Canvas{width: width, height: height, pixels: pixels}
   end
@@ -18,8 +18,7 @@ defmodule Dl44.Canvas do
     %Canvas{
       width: w,
       height: h,
-      pixels: ExternalMatrix
-.set(p, y, x, color)
+      pixels: ExternalMatrix.set(p, y, x, color)
     }
   end
 
