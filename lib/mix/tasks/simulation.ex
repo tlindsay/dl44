@@ -1,7 +1,8 @@
-defmodule Dl44.CLI do
+defmodule Mix.Tasks.Simulation do
+  use Mix.Task
   alias Dl44.Simulation
 
-  def main(args) do
+  def run(args) do
     options = [switches: [output: :string], aliases: [o: :output]]
     {opts, _, _} = OptionParser.parse(args, options)
 
@@ -12,3 +13,4 @@ defmodule Dl44.CLI do
     File.write!(outfile, ppm)
   end
 end
+

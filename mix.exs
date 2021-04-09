@@ -7,7 +7,6 @@ defmodule Dl44.MixProject do
       version: "0.1.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
-      escript: [main_module: Dl44.CLI],
       deps: deps()
     ]
   end
