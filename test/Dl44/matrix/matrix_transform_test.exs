@@ -1,10 +1,35 @@
 defmodule Dl44.Matrix.TransformTest do
   use ExUnit.Case
+  use TestHelper
 
   alias Dl44.Matrix
   alias Dl44.Matrix.Transform
   alias Dl44.Point
   alias Dl44.Vector
+
+  describe "Chaining Transformations" do
+    test "Individiual transformations are applied in sequence" do
+      p = Point.new(1, 0, 1)
+      p
+      |> Transform.rotate(:math.pi/2, :x)
+      |> has(&Matrix.loose_equal?(&1, Point.new(1, -1, 0) |> Point.to_mat))
+      |> Transform.scale({5, 5, 5})
+      |> has(&Matrix.loose_equal?(&1, Point.new(5, -5, 0) |> Point.to_mat))
+      |> Transform.translate({10, 5, 7})
+      |> has(&Matrix.loose_equal?(&1, Point.new(15, 0, 7) |> Point.to_mat))
+    end
+
+    test "Chained transformations are applied in reverse" do
+      p = Point.new(1, 0, 1) |> Point.to_mat
+      a = Transform.rotation_x(:math.pi/2)
+      b = Transform.scalingMatrix({5, 5, 5})
+      c = Transform.translationMatrix({10, 5, 7})
+      t = c
+          |> Matrix.multiply(b)
+          |> Matrix.multiply(a)
+      assert Matrix.multiply(t, p) == Point.new(15, 0, 7) |> Point.to_mat
+    end
+  end
 
   describe "Rotation" do
     test "Rotating a point around the x-axis" do
