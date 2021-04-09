@@ -19,6 +19,14 @@ defmodule Dl44.Matrix.Transform do
     |> Matrix.multiply(mat)
   end
 
+  def shear(p = %Point{}, t), do: Point.to_mat(p) |> shear(t)
+  def shear(v = %Vector{}, t), do: Vector.to_mat(v) |> shear(t)
+  def shear(mat = %Matrex{}, t) do
+    t
+    |> shearingMatrix
+    |> Matrix.multiply(mat)
+  end
+
   def translate(p = %Point{}, t),  do: Point.to_mat(p) |> translate(t)
   def translate(v = %Vector{}, _), do: Vector.to_mat(v)
   def translate(m1 = %Matrex{}, m2 = %Matrex{}), do: Matrix.multiply(m2, m1)
@@ -36,10 +44,10 @@ defmodule Dl44.Matrix.Transform do
      [ 0.0,    0.0,     0.0, 1.0 ]]
   """
   def rotation_x(r) do
-    [[ 0.0,    0.0,     0.0, 0.0 ],
+    [[ 0.0,          0.0,           0.0, 0.0 ],
      [ 0.0, :math.cos(r), -:math.sin(r), 0.0 ],
      [ 0.0, :math.sin(r),  :math.cos(r), 0.0 ],
-     [ 0.0,    0.0,     0.0, 1.0 ]]
+     [ 0.0,          0.0,           0.0, 1.0 ]]
      |> Matrex.new
   end
 
@@ -85,6 +93,21 @@ defmodule Dl44.Matrix.Transform do
     |> Matrix.set(0, 0, x)
     |> Matrix.set(1, 1, y)
     |> Matrix.set(2, 2, z)
+  end
+
+  @doc """
+  A scaling matrix takes the form:
+    [[ 1.0, x_y, x_z, 0.0 ],
+     [ y_x, 1.0, y_z, 0.0 ],
+     [ z_x, z_y, 1.0, 0.0 ],
+     [ 0.0, 0.0, 0.0, 1.0 ]]
+  """
+  def shearingMatrix({x_y, x_z, y_x, y_z, z_x, z_y}) do
+    [[1.0, x_y, x_z, 0.0],
+     [y_x, 1.0, y_z, 0.0],
+     [z_x, z_y, 1.0, 0.0],
+     [0.0, 0.0, 0.0, 1.0]]
+     |> Matrex.new
   end
 
   @doc """

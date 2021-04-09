@@ -50,6 +50,50 @@ defmodule Dl44.Matrix.TransformTest do
     end
   end
 
+  describe "Shearing" do
+    test "A shearing transformation moves x in proportion to y" do
+      transform = {1, 0, 0, 0, 0, 0}
+      p = Point.new(2, 3, 4)
+
+      assert Transform.shear(p, transform) == Point.new(5, 3, 4) |> Point.to_mat
+    end
+
+    test "A shearing transformation moves x in proportion to z" do
+      transform = {0, 1, 0, 0, 0, 0}
+      p = Point.new(2, 3, 4)
+
+      assert Transform.shear(p, transform) == Point.new(6, 3, 4) |> Point.to_mat
+    end
+
+    test "A shearing transformation moves y in proportion to x" do
+      transform = {0, 0, 1, 0, 0, 0}
+      p = Point.new(2, 3, 4)
+
+      assert Transform.shear(p, transform) == Point.new(2, 5, 4) |> Point.to_mat
+    end
+
+    test "A shearing transformation moves y in proportion to z" do
+      transform = {0, 0, 0, 1, 0, 0}
+      p = Point.new(2, 3, 4)
+
+      assert Transform.shear(p, transform) == Point.new(2, 7, 4) |> Point.to_mat
+    end
+
+    test "A shearing transformation moves z in proportion to x" do
+      transform = {0, 0, 0, 0, 1, 0}
+      p = Point.new(2, 3, 4)
+
+      assert Transform.shear(p, transform) == Point.new(2, 3, 6) |> Point.to_mat
+    end
+
+    test "A shearing transformation moves z in proportion to y" do
+      transform = {0, 0, 0, 0, 0, 1}
+      p = Point.new(2, 3, 4)
+
+      assert Transform.shear(p, transform) == Point.new(2, 3, 7) |> Point.to_mat
+    end
+  end
+
   describe "Translation" do
     test "Multiplying by a translation matrix" do
       transform = {5, -3, 2}
