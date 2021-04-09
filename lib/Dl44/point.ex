@@ -12,8 +12,10 @@ defmodule Dl44.Point do
   def new(n \\ 0.0)
   def new(%{x: x, y: y, z: z}), do: %Point{x: x/1, y: y/1, z: z/1}
   def new([x, y, z]), do: %Point{x: x/1, y: y/1, z: z/1}
+  def new([x, y, z, 1.0]), do: %Point{x: x/1, y: y/1, z: z/1}
   def new(n), do: %Point{x: n/1, y: n/1, z: n/1}
   def new(x, y, z), do: %Point{x: x/1, y: y/1, z: z/1}
 
   def to_mat(%Point{x: x, y: y, z: z, w: w}), do: Matrix.new([[x, y, z, w]]) |> Matrix.transpose
+  def from_mat(m = %Matrex{}), do: Matrex.to_list(m) |> Point.new
 end
