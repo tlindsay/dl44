@@ -9,7 +9,6 @@ defmodule Dl44.Matrix.Transform do
   def rotate(mat = %Matrex{}, angle, :y), do: rotation_y(angle) |> Matrix.multiply(mat)
   def rotate(mat = %Matrex{}, angle, :z), do: rotation_z(angle) |> Matrix.multiply(mat)
 
-
   def scale(p = %Point{}, t), do: Point.to_mat(p) |> scale(t)
   def scale(v = %Vector{}, t), do: Vector.to_mat(v) |> scale(t)
   def scale(m1 = %Matrex{}, m2 = %Matrex{}), do: Matrix.multiply(m2, m1)
@@ -38,13 +37,13 @@ defmodule Dl44.Matrix.Transform do
 
   @doc """
   A rotation X matrix takes the form:
-    [[ 0.0,    0.0,     0.0, 0.0 ],
+    [[ 1.0,    0.0,     0.0, 0.0 ],
      [ 0.0, cos(r), -sin(r), 0.0 ],
      [ 0.0, sin(r),  cos(r), 0.0 ],
      [ 0.0,    0.0,     0.0, 1.0 ]]
   """
   def rotation_x(r) do
-    [[ 0.0,          0.0,           0.0, 0.0 ],
+    [[ 1.0,          0.0,           0.0, 0.0 ],
      [ 0.0, :math.cos(r), -:math.sin(r), 0.0 ],
      [ 0.0, :math.sin(r),  :math.cos(r), 0.0 ],
      [ 0.0,          0.0,           0.0, 1.0 ]]
